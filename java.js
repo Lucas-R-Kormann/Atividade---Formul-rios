@@ -1,90 +1,95 @@
 document.getElementById('formPesquisa').addEventListener('submit', function (e) {
     e.preventDefault();
 
-    const nomeCompleto = document.getElementById('nomeCompleto');
-    const email = document.getElementById('email');
-    const telefone = document.getElementById('telefone');
-    const endereco = document.getElementById('endereco');
-    const dataNascimento = document.getElementById('dataNascimento');
-    const genero = document.getElementById('genero');
+    var nomeCompleto = document.getElementById('nomeCompleto');
+    var email = document.getElementById('email');
+    var telefone = document.getElementById('telefone');
+    var endereco = document.getElementById('endereco');
+    var dataNascimento = document.getElementById('dataNascimento');
+    var genero = document.getElementById('genero');
+    var escolaridade = document.getElementbyId('escolaridade')
+    var rendaFamiliarMensal = document.getElementbyID('rendaFamiliarMensal')
+    var estadoCivil = document.getElementbyID('estadoCivil')
+
 
     let valid = true;
 
-    if (nomeCliente.value.trim() === '') {
+    if (nomeCompleto.value.trim() === '') {
         alert('Por favor, preencha o nome do cliente');
         valid = false;
     }
 
-    const telefoneRegex = /^\d{11}$/;
+    var telefoneRegex = /^\d{11}$/;
     if (!telefoneRegex.test(telefone.value)) {
         alert('Telefone deve conter 11 dígitos (DDD + número)');
         valid = false;
     }
 
     if (email.value !== '') {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email.value)) {
             alert('Por favor, insira um e-mail válido');
             valid = false;
         }
-    }})
-
-    function validadataNascimento(){
-        var dataNascimento = document.getElementById("dataNascimento").value;
-        dataNascimento = dataNascimento.replace(/\//g, "-"); 
-        var dataNascimento_array = dataNascimento.split("-"); 
-                
-        if(dataNascimento_array[0].length != 4){
-           dataNascimento = dataNascimento_array[2]+"-"+dataNascimento_array[1]+"-"+dataNascimento_array[0]; 
-        }
-    
-        var hoje = new Date();
-        var nasc  = new Date(dataNascimento);
-        var idade = hoje.getFullYear() - nasc.getFullYear();
-        var m = hoje.getMonth() - nasc.getMonth();
-        if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
-        
-        if(idade < 13){
-           alert("Pessoas menores de 13 não podem responder a pesquisa.");
-           return false;
-        }
     }
-     
 
-    $('#genero').change(function(){
-        var value = $(this).val();
-           if(value == ''){
-             alert('Escolha uma opção');        
-         }
-     });
+    if (!validadataNascimento()) {
+        valid = false;
+    }
 
-     $('#escolaridade').change(function(){
-        var value = $(this).val();
-           if(value == ''){
-             alert('Escolha uma opção');        
-         }
-     });
+    if ($('#genero').val() == '') {
+        alert('Escolha uma opção para gênero');
+        valid = false;
+    }
 
-     $('#rendaFamiliarMensal').change(function(){
-        var value = $(this).val();
-           if(value == ''){
-             alert('Escolha uma opção');        
-         }
-     });
+    if ($('#escolaridade').val() == '') {
+        alert('Escolha uma opção para escolaridade');
+        valid = false;
+    }
 
+    if ($('#rendaFamiliarMensal').val() == '') {
+        alert('Escolha uma opção para renda familiar mensal');
+        valid = false;
+    }
 
-     $('#estadoCivil').change(function(){
-        var value = $(this).val();
-           if(value == ''){
-             alert('Escolha uma opção');        
-         }
-     });
+    if ($('#estadoCivil').val() == '') {
+        alert('Escolha uma opção para estado civil');
+        valid = false;
+    }
 
-
-     if (valid) {
+    if (valid) {
         alert('Pesquisa enviada com sucesso!');
         this.reset();
     }
+});
+
+function validadataNascimento() {
+    var dataNascimento = document.getElementById("dataNascimento").value;
+    if (!dataNascimento) {
+        alert('Por favor, preencha a data de nascimento');
+        return false;
+    }
+
+    dataNascimento = dataNascimento.replace(/\//g, "-"); 
+    var dataNascimento_array = dataNascimento.split("-"); 
+            
+    if(dataNascimento_array[0].length != 4){
+       dataNascimento = dataNascimento_array[2]+"-"+dataNascimento_array[1]+"-"+dataNascimento_array[0]; 
+    }
+
+    var hoje = new Date();
+    var nasc  = new Date(dataNascimento);
+    var idade = hoje.getFullYear() - nasc.getFullYear();
+    var m = hoje.getMonth() - nasc.getMonth();
+    if (m < 0 || (m === 0 && hoje.getDate() < nasc.getDate())) idade--;
+    
+    if(idade < 13){
+       alert("Pessoas menores de 13 não podem responder a pesquisa.");
+       return false;
+    }
+    
+    return true;
+}
 
      
      
