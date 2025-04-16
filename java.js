@@ -81,6 +81,10 @@ document.getElementById('formPesquisa').addEventListener('submit', function (e) 
      });
 
 
+     if (valid) {
+        alert('Pesquisa enviada com sucesso!');
+        this.reset();
+    }
 
      
      
